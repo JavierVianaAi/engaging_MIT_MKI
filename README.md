@@ -11,53 +11,61 @@ Usage of Engaging GPUs for AI Applications
 MKI has purchased several nodes in Engaging. We have two main partitions:
 
 ```
-**sched_mit_mki_r8
-sched_mit_mki_preempt_r8**
+sched_mit_mki_r8
+sched_mit_mki_preempt_r8
 ```
 
 The ```sched_mit_mki_r8``` partition:
 
 •	Has 2 nodes node2000 and node2001, which have a limit of 7 days for computations. 
 •	Each of these nodes has 4 NVIDIA A100 GPUs. 
-•	Is the higher priority partition, the jobs that are sent here will be executed with priority over the jobs sent to sched_mit_mki_preempt_r8.
+•	Is the higher priority partition, the jobs that are sent here will be executed with priority over the jobs sent to ```sched_mit_mki_preempt_r8```.
 
-The sched_mit_mki_preempt_r8 partition:
+The ```sched_mit_mki_preempt_r8``` partition:
 
 •	Has various nodes, which have a limit of 14 days for computations. 
 •	Each of these nodes has 4 NVIDIA A100 GPUs. 
-•	Is the lower priority partition, the jobs that are sent here may be finished suddenly due to “PREEMPTION”. If this happens it would mean that a higher priority job was sent to sched_mit_mki_r8 and took over the resources that were allocated for the job you sent to sched_mit_mki_preempt_r8.
+•	Is the lower priority partition, the jobs that are sent here may be finished suddenly due to “PREEMPTION”. If this happens it would mean that a higher priority job was sent to ```sched_mit_mki_r8``` and took over the resources that were allocated for the job you sent to ```sched_mit_mki_preempt_r8```.
 
 Each GPU has 32 CPU cores. Since our nodes have 4 GPUs, we have 128 CPU cores per node.
 
 
-2.	Installation of Virtual Environment and Tensorflow GPU Enabled:
+**2.	Installation of Virtual Environment and Tensorflow GPU Enabled:**
 
 For those doing AI training and using Tensorflow, remember that Tensorflow is lazy. If there are no GPU resources found by Tensorflow when you are installing it in your virtual environment, it won’t install the GPU version of Tensorflow, which should include cudatoolkits and cudnn. Furthermore, if you are using the shell of Engaging web portal it won’t be possible for you to install Tensorflow GPU enabled. This is because the Engaging shell works with the Centos 7 system and at MKI we use the Rocky 8. So, instead of using the Engaging web shell, use your own computer’s terminal. 
 
 First you will need to ssh into Engaging, we want to use the EOFE10 and not the EOFE7. In my case, my username is vianajr so I run:
 
+```
 ssh vianajr@eofe10.mit.edu
+```
 
 The system will ask me to login with my Kerberos account and the authenticate with the DUO app.
 
 For those that have been trying to install Tensorflow before, had issues already, and want to start fresh you can move the conda and the cache. Careful, only do this if you know that you know you won’t loose any information already installed, since it would basically restart conda and cache from zero: 
 
+```
 cd
 mv .conda .conda1
 mv .cache .cache1
+```
 
 Now, before we can actually start, we first need to allocate some GPU resources, so that when we are installing Tensorflow it recognizes that there exists GPU hardware and installs the Tensorflow GPU enabled for you. We can do this simply with a job of 1 GPU, in the sched_mit_mki_r8 partition and requesting 10GB. That should be enough for the installation. We can do this by:
- 
+
+```
 srun -t 60 --gres=gpu:1 -p sched_mit_mki_r8 -n 2 --mem=10GB --pty bash
+```
 
 Now we have to use the rocky8 system. Very important:
 
+```
 module use /orcd/software/community/001/modulefiles/rocky8
+```
 
 Then let’s check which is the available miniforge in this system:
-
+```
 module av miniforge
-
+```
 The 23.11.0-0 should be available, if not use the one you get in the output of the previous command. Then load this miniforge by doing:
 
 module load miniforge/23.11.0-0
