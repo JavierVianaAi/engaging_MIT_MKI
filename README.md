@@ -63,87 +63,108 @@ module use /orcd/software/community/001/modulefiles/rocky8
 ```
 
 Then let’s check which is the available miniforge in this system:
+
 ```
 module av miniforge
 ```
+
 The 23.11.0-0 should be available, if not use the one you get in the output of the previous command. Then load this miniforge by doing:
 
+```
 module load miniforge/23.11.0-0
+```
 
 Now we can create a virtual environment:
 
+```
 conda create -n YOUR_ENVIRONMENT_NAME
+```
 
 Activate the environment with source:
 
+```
 source activate YOUR_ENVIRONMENT_NAME
+```
 
 And install Tensorflow, this can take long:
 
+```
 conda install tensorflow
+```
 
 Once it has finished, then you can check if these lines work, you should see that it mentions there are actual GPU devices:
 
+```
 python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 python -c "import tensorflow as tf; print(tf.test.is_gpu_available())"
+```
 
 You can also install other packages simply by:
 
+```
 conda install scikit-learn
+```
 
 Or many modules at the same time by simply appending them after:
 
+```
 conda install jupyterlab numpy pandas seaborn scipy
+```
 
 Careful, you do not need to install cudatoolkit and cudnn after installing Tensorflow. 
 
 
-3.	Usage of Virtual Environment:
+**3.	Usage of Virtual Environment:**
 
 Now that we have the environment created, let’s use it to submit some jobs.
 Again, if you have left the terminal, first login:
 
+```
 ssh vianajr@eofe10.mit.edu
+```
 
 Then do the same commands we did before, USE, LOAD, and ACTIVATE:
 
+```
 module use /orcd/software/community/001/modulefiles/rocky8
 module load miniforge/23.11.0-0
-
 source activate YOUR_ENVIRONMENT_NAME
+```
 
 Now you can send jobs that use the GPU resources.
 
 You can do this in 2 ways:
 
-Option 1:
+**Option 1:**
 
 With a BASH file. Your BASH file will specify all the details you want for your job, like the partition where you want your job to be executed, and the resources allocated such as the number of GPUs, the hours and memory requested, etc. 
 
 sbatch your_directoy/your_bash_file.sh
 
 
-Option 2:
+**Option 2:**
 
 If you want to run python jobs directly from the terminal then you can simply use first the salloc command, and then run your python file. But note that this won't let you run more commands till the python job is done. 
 
 Here are a couple examples of salloc, one using 4 GPUs and the other 1 GPU:
 
+```
 salloc -p sched_mit_mki_preempt_r8 --mem=0 -N 1 --exclusive --gres=gpu:4
 salloc -p sched_mit_mki_preempt_r8 --mem=0 -N 1 --exclusive --gres=gpu:1
+```
 
 Now run your python file:
 
+```
 python DIRECTORY_OF_FILE/MY_FILE.py
+```
 
 
-
-
-4.	Monitoring GPU Usage:
+**4.	Monitoring GPU Usage:**
 
 When using GPU resources you want to see how your GPUs are being used while your jobs are running. You can do this in 2 ways:
 
-Option 1 – RECOMMENDED:
+**Option 1 – RECOMMENDED:**
 
 If you intend to submit a job with a BASH script, you will be submitting a line of code like this:
 
