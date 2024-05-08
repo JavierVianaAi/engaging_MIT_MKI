@@ -176,10 +176,12 @@ sbatch your_directory/your_bash_file.sh
 ```
 
 Once you have submitted your job, you can login in Engaging, and check in the Active Jobs tab if your job is in the queue or actually running. 
+
 ![alt text](https://github.com/JavierVianaAi/engaging_MIT_MKI/blob/main/images/pic_1.png)
 
 Once the resources are allocated and the job is running you can open the information of the job in the Jobs section of Engaging and it will tell you which node is exactly being used by the job. 
 
+![alt text](https://github.com/JavierVianaAi/engaging_MIT_MKI/blob/main/images/pic_2.png)
  
 The job that is shown in this image for example, has node2001 allocated. Let us monitor the usage of the node’s GPUs. First, we need to login inside that node, we can do that through ssh:
 
@@ -194,6 +196,8 @@ nvidia-smi
 ```
 
 This will show a chart like this:
+
+![alt text](https://github.com/JavierVianaAi/engaging_MIT_MKI/blob/main/images/pic_3.png)
 
 In this case I am using the 4 GPUs, but you can see that only around a 24-27% is being used. The task I submitted was the training of an AI model, so if I wanted to increase the % of GPU usage I could simply increase the batch size or increase the number of parameters of the model.
 
