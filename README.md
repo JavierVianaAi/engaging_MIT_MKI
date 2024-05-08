@@ -1,4 +1,4 @@
-**Usage of Engaging GPUs for AI Applications**
+**Title: Usage of Engaging GPUs for AI Applications**
 
 <br />
  
