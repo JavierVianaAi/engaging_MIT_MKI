@@ -1,6 +1,7 @@
-Usage of Engaging GPUs for AI Applications
+**Usage of Engaging GPUs for AI Applications**
 
-
+<br />
+ 
 **Questions related to the document:** Javier Viaña
 
 **Email:** vianajr@mit.edu
@@ -32,6 +33,7 @@ The ```sched_mit_mki_preempt_r8``` partition:
 
 Each GPU has 32 CPU cores. Since our nodes have 4 GPUs, we have 128 CPU cores per node.
 
+<br />
 
 **2.	Installation of Virtual Environment and Tensorflow GPU Enabled:**
 
@@ -116,6 +118,7 @@ conda install jupyterlab numpy pandas seaborn scipy
 
 Careful, you do not need to install cudatoolkit and cudnn after installing Tensorflow. 
 
+<br />
 
 **3.	Usage of Virtual Environment:**
 
@@ -163,6 +166,7 @@ Now run your python file:
 python DIRECTORY_OF_FILE/MY_FILE.py
 ```
 
+<br />
 
 **4.	Monitoring GPU Usage:**
 
@@ -221,6 +225,7 @@ python your_directory/your_python_file.py
 
 And then you can run commands like lscpu, nvidia-smi, or top to see the usage of the GPUs. Note that your .py file should be written so that it actually uses the GPU resources.
 
+<br />
 
 **5.	Useful Terminal Commands:**
 
@@ -250,6 +255,7 @@ To check only those that have GPUs:
 sinfo -o %f,%G|grep gpu
 ```
 
+<br />
 
 **6.	Useful Information:**
 
@@ -309,6 +315,7 @@ If you want to add a certain channel for package downloading, like conda-forge.
 conda config --add channels conda-forge
 ```
 
+<br />
 
 **7.	Submitting an Array of Jobs:**
 
