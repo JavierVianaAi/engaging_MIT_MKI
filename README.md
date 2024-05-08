@@ -2,7 +2,9 @@ Usage of Engaging GPUs for AI Applications
 
 
 **Questions related to the document:** Javier Viaña
+
 **Email:** vianajr@mit.edu
+
 **Abstract:** This document intends to provide a collection of lessons learned by Javier Viaña to set up correctly the Engaging GPU resources available for MKI affiliates. For more detailed information visit https://orcd-docs.mit.edu 
 
 
