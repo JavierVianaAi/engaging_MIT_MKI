@@ -10,7 +10,7 @@ Usage of Engaging GPUs for AI Applications
 
 MKI has purchased several nodes in Engaging. We have two main partitions:
 
-```rb
+```
 sched_mit_mki_r8
 sched_mit_mki_preempt_r8
 ```
