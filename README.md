@@ -10,12 +10,12 @@ Usage of Engaging GPUs for AI Applications
 
 MKI has purchased several nodes in Engaging. We have two main partitions:
 
-```r
+**```
 sched_mit_mki_r8
 sched_mit_mki_preempt_r8
-```
+```**
 
-The ```rb sched_mit_mki_r8``` partition:
+The ```sched_mit_mki_r8``` partition:
 
 •	Has 2 nodes node2000 and node2001, which have a limit of 7 days for computations. 
 •	Each of these nodes has 4 NVIDIA A100 GPUs. 
