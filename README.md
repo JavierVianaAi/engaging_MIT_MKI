@@ -15,7 +15,7 @@ sched_mit_mki_r8
 sched_mit_mki_preempt_r8
 ```
 
-The ```sched_mit_mki_r8``` partition:
+The ```rb sched_mit_mki_r8``` partition:
 
 •	Has 2 nodes node2000 and node2001, which have a limit of 7 days for computations. 
 •	Each of these nodes has 4 NVIDIA A100 GPUs. 
