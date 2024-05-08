@@ -176,6 +176,7 @@ sbatch your_directory/your_bash_file.sh
 ```
 
 Once you have submitted your job, you can login in Engaging, and check in the Active Jobs tab if your job is in the queue or actually running. 
+![alt text](https://github.com/JavierVianaAi/engaging_MIT_MKI/blob/main/images/pic_1.png)
 
 Once the resources are allocated and the job is running you can open the information of the job in the Jobs section of Engaging and it will tell you which node is exactly being used by the job. 
 
