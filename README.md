@@ -139,8 +139,9 @@ You can do this in 2 ways:
 
 With a BASH file. Your BASH file will specify all the details you want for your job, like the partition where you want your job to be executed, and the resources allocated such as the number of GPUs, the hours and memory requested, etc. 
 
+```
 sbatch your_directoy/your_bash_file.sh
-
+```
 
 **Option 2:**
 
@@ -168,68 +169,81 @@ When using GPU resources you want to see how your GPUs are being used while your
 
 If you intend to submit a job with a BASH script, you will be submitting a line of code like this:
 
+```
 sbatch your_directory/your_bash_file.sh
+```
 
 Once you have submitted your job, you can login in Engaging, and check in the Active Jobs tab if your job is in the queue or actually running. 
-
- 
 
 Once the resources are allocated and the job is running you can open the information of the job in the Jobs section of Engaging and it will tell you which node is exactly being used by the job. 
 
  
-
-
-
 The job that is shown in this image for example, has node2001 allocated. Let us monitor the usage of the node’s GPUs. First, we need to login inside that node, we can do that through ssh:
 
+```
 ssh node2001
+```
 
 Then we simply run the command to see the resources utilized within this node:
 
+```
 nvidia-smi
+```
 
 This will show a chart like this:
-
- 
 
 In this case I am using the 4 GPUs, but you can see that only around a 24-27% is being used. The task I submitted was the training of an AI model, so if I wanted to increase the % of GPU usage I could simply increase the batch size or increase the number of parameters of the model.
 
 This chart is very useful, as it also tells you in the top right which is the CUDA version used by the supercomputer, which sometimes is important to know if you are installing packages that work only with a certain CUDA version, like Tensorflow with GPU usage enabled. In this case, the CUDA Version installed in the Supercomputer: 12.4.
 
 
-Option 2:
+**Option 2:**
 
 If you are just running a .py file directly through the terminal, and not sending a job with a BASH script, then using an interactive window might be the best option. This requires you to run allocate resources first, i.e., running this:
 
+```
 salloc -p sched_mit_mki_preempt_r8 --mem=0 -N 1 --exclusive --gres=gpu:4
+```
 
 Then you would be able to run your .py file:
 
+```
 python your_directory/your_python_file.py
+```
 
 And then you can run commands like lscpu, nvidia-smi, or top to see the usage of the GPUs. Note that your .py file should be written so that it actually uses the GPU resources.
 
 
-5.	Useful Terminal Commands:
-
+**5.	Useful Terminal Commands:**
 
 Here are some useful commands to run from the terminal to know the information of the partitions that you have access to:
 
 To check which are the partitions to which you can submit:
+
+```
 groups
+```
 
 To check all the available partitions:
+
+```
 sinfo
+```
 
 To check if the partitions/nodes have GPUs or CPUs:
+
+```
 sinfo -o %f,%G
+```
 
 To check only those that have GPUs:
+
+```
 sinfo -o %f,%G|grep gpu
+```
 
 
-
-6.	Useful Information:
+**6.	Useful Information:**
 
 If you are eofe10 then you are in the HEAD NODE, which doesn't have GPUs.
 All the resources are in the COMPUTE NODEs, for example, node2000 and node2001 are COMPUTE NODEs.
@@ -237,36 +251,58 @@ All the resources are in the COMPUTE NODEs, for example, node2000 and node2001 a
 Note the differences between:
 
 If I am using the HEAD NODE with a virtual environment called javier_env, then the command line should look like this:
+
+```
 (javier_env) [vianajr@eofe10 ~]$
+```
 
 If I am using the COMPUTE NODE node2000, then the command line should look like this:
+
+```
 [vianajr@node2000 ~]$
+```
 
 If I am using the COMPUTE NODE node2000, with a virtual environment called javier_env, then the command line should look like this:
-(javier_env) [vianajr@node2000 ~]$
 
+```
+(javier_env) [vianajr@node2000 ~]$
+```
 
 Below are some other useful commands:
 
 First remember to run the use and load commands:
+
+```
 module use /orcd/software/community/001/modulefiles/rocky8
 module load miniforge/23.11.0-0
+```
 
 Now, you can run the following command see all the environments available:
+
+```
 conda env list
+```
 
 If you are already inside an environment and you want to deactivate it:
+
+```
 conda deactivate
+```
 
 If you want to delete an environment:
+
+```
 conda remove --name ENVIRONMENT –all
+```
 
 If you want to add a certain channel for package downloading, like conda-forge.
+
+```
 conda config --add channels conda-forge
+```
 
 
-
-7.	Submitting an Array of Jobs:
+**7.	Submitting an Array of Jobs:**
 
 If we use the word “array” in the bash script, it would request an array of jobs. Since we have 2 nodes each with 4 GPUs, you could for example:
 
@@ -276,37 +312,43 @@ If we use the word “array” in the bash script, it would request an array of 
 
 Here is an example where we request a single task, with 1 node with 4 GPUs. Since we just have 1 task we can have all the 128 CPUs of the node assigned to the task:
 
+```
 #!/bin/bash
 #SBATCH --gres=gpu:4
 #SBATCH --cpus-per-task=128
 #SBATCH --partition=sched_mit_mki_preempt_r8
 #SBATCH -o odir/myout-%j  # Specifies the directory where I want the .out file
-
+```
 
 Here is an example where we send 8 tasks and each task uses 1 GPU, so we are using all the 8 GPUs available. Note that we have to adjust the cpus-per-task to 32 because we have 8 tasks and each task is running in 1 GPU, and we know that each GPU has 32 CPUs.
 
+```
 #!/bin/bash
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=32
 #SBATCH --array 0-7
 #SBATCH --partition=sched_mit_mki_preempt_r8
 #SBATCH -o odir/myout-%j
+```
 
 If you want an array of 2 tasks using all the resources, then we can have 4 GPUs per task, and 128 CPUs per task. That would utilize all the 8 GPUs available.
 
+```
 #!/bin/bash
 #SBATCH --gres=gpu:4
 #SBATCH --cpus-per-task=128
 #SBATCH --array 0-1
 #SBATCH --partition=sched_mit_mki_preempt_r8
 #SBATCH -o odir/myout-%j
+```
 
-
-8.	Remember for Tensorflow Users:
+**8.	Remember for Tensorflow Users:**
 
 Ensure that your Tensorflow code is configured to utilize GPUs. You can do this by creating a Tensorflow session with GPU options explicitly set in your python code. For example as follows:
 
+```
 import tensorflow as tf
+
 
 # Explicitly allow TensorFlow to use GPU memory as needed
 config = tf.compat.v1.ConfigProto()
@@ -320,8 +362,9 @@ with strategy.scope():
 
 	# Here you define the model, compile it, and then perform the fitting.
 
-# For more information check this website:
-https://www.tensorflow.org/guide/distributed_training
+```
 
+For more information check this website:
+https://www.tensorflow.org/guide/distributed_training
 
 
