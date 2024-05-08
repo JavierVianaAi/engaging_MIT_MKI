@@ -7,7 +7,8 @@ Usage of Engaging GPUs for AI Applications
 
 **Abstract:** This document intends to provide a collection of lessons learned by Javier Viaña to set up correctly the Engaging GPU resources available for MKI affiliates. For more detailed information visit https://orcd-docs.mit.edu 
 
- <br />
+<br />
+
 **1.	Partition Information:**
 
 MKI has purchased several nodes in Engaging. We have two main partitions:
